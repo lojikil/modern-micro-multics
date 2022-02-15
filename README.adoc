@@ -1,0 +1,10 @@
+== Overview
+
+A tiny (microscopic even) experiment with a user mode Multics. Currently implemented in Python3, mostly for ease of porting
+and use of dbm. Inspiration from a few different sources:
+
+. Multics, obviously, but also PR1MOS and Stratus VOS
+. GEORGE3/4
+. Poplog
+
+This is also an experiment for me to test out some of the ideas I was thinking about in SemaforOS.
