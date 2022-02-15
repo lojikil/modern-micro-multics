@@ -10,7 +10,6 @@ def vfs_mkdir(pack, cd):
     bcdir = bytes(cdir.encode())
     pdir = ">".join(parent) + ".dir"
     bpdir = bytes(pdir.encode())
-    print(pdir)
     if bpdir not in pack.keys():
         return -1
     elif bcdir in pack.keys():

@@ -3,6 +3,19 @@ import dbm
 import time
 from dos import *
 
+def exec_help():
+    print("""
+quit: exit the executive
+get-current-working-directory or getcwd: get the current working directory
+list-directory or ld: list the contents of the current working directory
+change-working-directory or cwd: change the working directory
+create or cr: create a file/segment
+display or d: display the contents of a file or segment
+ed: line editor
+create_directory or crd: create a directory
+help or h: this help
+""")
+
 def dos_shell(fs):
     cwd = ">udd"
     user = os.getlogin()
@@ -93,6 +106,8 @@ def dos_shell(fs):
                 vfs_mkdir(fs, args)
             else:
                 vfs_mkdir(fs, cwd + ">" + args)
+        elif cmd == "help" or cmd == "h":
+            exec_help()
 
 if __name__ == "__main__":
     fs = dbm.open('mmm_fs', 'c')
