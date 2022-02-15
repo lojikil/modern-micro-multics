@@ -1,6 +1,7 @@
 import os
 import dbm
 import time
+from vm import VM
 from dos import *
 
 def exec_help():
@@ -16,7 +17,7 @@ create_directory or crd: create a directory
 help or h: this help
 """)
 
-def dos_shell(fs):
+def dos_shell(fs, mvm):
     cwd = ">udd"
     user = os.getlogin()
     if bytes((">udd>" + user).encode()) not in fs.keys():
@@ -34,7 +35,7 @@ def dos_shell(fs):
         else:
             args = ""
 
-        if cmd == "quit":
+        if cmd == "quit" or cmd == "q":
             break
         elif cmd == "get-current-working-directory" or cmd == "getcwd":
             print(cwd)
@@ -108,6 +109,21 @@ def dos_shell(fs):
                 vfs_mkdir(fs, cwd + ">" + args)
         elif cmd == "help" or cmd == "h":
             exec_help()
+        elif cmd == "run" or cmd == "r":
+            if args == "":
+                args = input("program module: ")
+            if args[0] != '>':
+                args = cwd + ">" + args
+            cparts = vfs_util_workdir_segment(args)
+            pm = vfs_read(fs, cparts[0], cparts[1])
+            if type(pm) == VFSError:
+                print(pm)
+            else:
+                mvm.run(pm)
+        else:
+            # here, we can check >system>bin and cwd for
+            # the binary name really..
+            print("command not found")
 
 if __name__ == "__main__":
     fs = dbm.open('mmm_fs', 'c')
@@ -118,6 +134,7 @@ if __name__ == "__main__":
         fs[">udd.dir"] = ""
 
     vfs_mkdir(fs, ">system>bin")
+    mainvm = VM()
 
-    dos_shell(fs)
+    dos_shell(fs, mainvm)
     fs.close()
