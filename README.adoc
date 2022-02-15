@@ -8,3 +8,40 @@ and use of dbm. Inspiration from a few different sources:
 . Poplog
 
 This is also an experiment for me to test out some of the ideas I was thinking about in SemaforOS.
+
+== Usage
+
+Currently, you just need Python3, and whatever `+dbm+` module is currently installed; that should normally be backed by
+`+gdbm+`, but it should work regardless. To start the executive, just run `+python3 exec.py+`, which will drop you
+into a shell:
+
+[source]
+----
+% python3 exec.py <1>
+>system.dir
+>udd.dir
+# Tue Feb 15 07:23:44 2022 <2>
+getcwd <3>
+>udd>lojikil <4>
+# Tue Feb 15 07:23:47 2022
+ld <5>
+Directories: <6>
+work
+docs
+Segments:
+
+# Tue Feb 15 07:24:57 2022
+----
+<1> Invocation
+<2> The `+exec+` prompt
+<3> `getcwd` get the current working directory
+<4> We're currently in `>udd>lojikil`
+<5> `ld` list directory
+<6> The result is two directories and no segments/files
+
+== Current status
+
+Currently, this is basically just a simple disk operating system shell (DOS shell). I went this route because that's how
+most operating systems of the era were written: start with a DOS, then add a Shell, then add all the stuff you actually
+want to support. My thoughts here are something like BOS, USCD Pascal, and Inferno could be really interesting, all in
+a simple set of files. Make it easily hackable, easily approachable, and restartable
