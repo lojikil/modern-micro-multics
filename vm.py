@@ -8,6 +8,7 @@ class VM(object):
         self.control = 0
         self.dump = []
         self.vmhalt = False
+        self.csp = {}
 
     def run(self, program):
         lines = program.split('\n')
@@ -16,11 +17,13 @@ class VM(object):
             prg.append(self.decode_instruction(line))
 
         while not self.vmhalt and self.control < len(prg):
-            print(prg[self.control])
             (op, operand) = prg[self.control]
             self.execute(op, operand)
             if op != "jmp" and op != "jpc":
                 self.control = self.control + 1
+
+    def add_csp(self, syscall, f, arity):
+        self.csp[syscall] = [f, arity]
 
     def decode_instruction(self, src):
         # eventually I'd like to do something better here
@@ -46,6 +49,39 @@ class VM(object):
             self.env[operand] = self.stack.pop()
         elif op == "csp":
             # call system procedure
+            iopr = int(operand)
+            if iopr == 0:
+                # print
+                opr0 = self.stack.pop()
+                print(opr0)
+            elif iopr == 1:
+                # readline
+                opr0 = self.stack.pop()
+                stack.append(input(opr0))
+            elif iopr == 2:
+                # string_of
+                opr0 = self.stack.pop()
+                stack.append(str(opr0))
+            elif iopr == 3:
+                # int_of_string
+                opr0 = self.stack.pop()
+                stack.append(int(opr0))
+            elif iopr == 4:
+                # hex_of_string
+                opr0 = self.stack.pop()
+                stack.append(int(opr0, base=16))
+            elif iopr == 5:
+                # oct_of_string
+                opr0 = self.stack.pop()
+                stack.append(int(opr0, base=8))
+            elif iopr == 6:
+                # bin_of_string
+                opr0 = self.stack.pop()
+                stack.append(int(opr0, base=2))
+            elif iopr == 7:
+                # float_of_string
+                opr0 = self.stack.pop()
+                stack.append(float(opr0))
             pass
         elif op == "cup":
             # call user procedure
