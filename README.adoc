@@ -123,3 +123,4 @@ multi-user, but Python and multi-user is... suspect. The thought struck me, howe
 . https://en.wikipedia.org/wiki/Business_Operating_System_(software)[Business Operating System (BOS)]
 . https://www.atarimagazines.com/startspe1/business.html[Running BOS on Atari ST]
 . https://www.thedarts.eu/comphist/comphist.html[History of BOS]
+. https://en.wikipedia.org/wiki/GEORGE_(operating_system)#GEORGE_3_&_4[GEORGE 3 and 4]
