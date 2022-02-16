@@ -51,7 +51,112 @@ class VM(object):
             # call user procedure
             pass
         elif op == "opr":
-            pass
+            iopr = int(operand)
+            # arithemetic operators
+            if iopr == 0:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 + opr1)
+            elif iopr == 1:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 - opr1)
+            elif iopr == 2:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 * opr1)
+            elif iopr == 3:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 / opr1)
+            elif iopr == 4:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 % opr1)
+            # bitwise
+            elif iopr == 5:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 << opr1)
+            elif iopr == 6:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 >> opr1)
+            elif iopr == 7:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 & opr1)
+            elif iopr == 8:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 | opr1)
+            elif iopr == 9:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 ^ opr1)
+            # logical, arithmetic, and bitwise negation
+            elif iopr == 10:
+                opr0 = self.stack.pop()
+                self.stack.append(~opr0)
+            elif iopr == 11:
+                opr0 = self.stack.pop()
+                self.stack.append(-opr0)
+            elif iopr == 12:
+                opr0 = self.stack.pop()
+                self.stack.append(not opr0)
+            # logical comparison operators
+            elif iopr == 13:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 < opr1)
+            elif iopr == 14:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 <= opr1)
+            elif iopr == 15:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 > opr1)
+            elif iopr == 16:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 >= opr1)
+            elif iopr == 17:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 == opr1)
+            elif iopr == 18:
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0 != opr1)
+            # stack operations
+            elif iopr == 19:
+                # dup
+                self.stack.append(self.stack[-1])
+            elif iopr == 20:
+                # drop
+                self.stack.pop()
+            elif iopr == 21:
+                # swap
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr0)
+                self.stack.append(opr1)
+            elif iopr == 22:
+                # over
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                self.stack.append(opr1)
+                self.stack.append(opr0)
+                self.stack.append(opr1)
+            elif iopr == 23:
+                # rot
+                opr0 = self.stack.pop()
+                opr1 = self.stack.pop()
+                opr2 = self.stack.pop()
+                self.stack.append(opr1)
+                self.stack.append(opr0)
+                self.stack.append(opr2)
         elif op == "ret":
             pass
         elif op == "jmp":
