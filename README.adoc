@@ -86,3 +86,37 @@ multi-user, but Python and multi-user is... suspect. The thought struck me, howe
 . Poplog, RavenWorks
 .. Common Language Runtime
 .. StandardML, Pop-11 (simple JS-like language), Oberon
+
+=== References
+
+. https://www.unige.ch/medecine/nouspikel/ti99/psystem.htm[The p-code system]
+. https://www.unige.ch/medecine/nouspikel/ti99/pcode.htm[The p-code card]
+. http://www.threedee.com/jcm/psystem/[The USCD p-system museum]
+. http://ucsd-psystem-vm.sourceforge.net[The USCD p-system VM]
+. https://en.wikipedia.org/wiki/Oberon_(programming_language)#Oberon-07[Oberon]
+. https://wiki.laptop.org/go/Forth_stack_operators[Forth Stack operators]
+. https://en.wikipedia.org/wiki/SECD_machine[SECD Machine]
+. https://en.wikipedia.org/wiki/P-code_machine[P-Code machine]
+. https://multicians.org/simulator.html[Multics Simulator]
+. http://ringzero.wikidot.com/start[RingZero Wiki]
+. http://ringzero.wikidot.com/wiki:multics-cheat-sheet[Multics Cheat Sheet]
+. https://github.com/dancrossnyc/multics[Multics source code on GitHub]
+. https://multicians.org/mgd.html#DOCKMASTER[DOCKMASTER]
+. https://www.cs.bham.ac.uk/research/projects/poplog/isl-docs/1999-AISBQ-TheStoryofClementine.pdf[Poplog Background]
+. http://www.cse.psu.edu/~trj1/cse443-s12/docs/ch3.pdf[Multics book]
+. https://wiki.livingcomputers.org/doku.php?id=multics[Multics on Living Computer Museum]
+. http://web.mit.edu/multics-history/source/Multics/doc/PLM/File_System/f_s.intro.compin[Multics PLM Background]
+. https://wiki.tcl-lang.org/page/Multics[TCL + Multics]
+. http://web.mit.edu/multics-history/source/Multics_Internet_Server/Multics_mdds.html[Multics Design Docs (MDD)]
+. http://web.mit.edu/multics-history/source/Multics_Internet_Server/Multics_doc_PLM_File_System.html[Multics PLM Background]
+. https://multicians.org/fjcc1.html[Introduction and Overview of the Multics System]
+. https://web.mit.edu/Saltzer/www/publications/f7y/f7y.html[Multics--The first seven years]
+. https://web.mit.edu/Saltzer/www/publications/TRs+TMs/Multics/TR-123.pdf[Introduction to Multics]
+. http://openpoplog.sourceforge.net/[OpenPoplog]
+. https://www.cs.bham.ac.uk/research/projects/cogaff/10.html#1005[Poplog programs]
+. https://www.cs.bham.ac.uk/research/projects/poplog/freepoplog.html[Free Poplog protal]
+. https://www.cs.bham.ac.uk/research/projects/cogaff/eliza/[Poplog Eliza]
+. https://www.cs.bham.ac.uk/research/projects/poplog/isl-docs/poplog-sussex-bulletin/[Poplog Bulletin]
+. https://en.wikipedia.org/wiki/Business_Operating_System_(software)[Business Operating System (BOS)]
+. https://www.atarimagazines.com/startspe1/business.html[Running BOS on Atari ST]
+. https://www.thedarts.eu/comphist/comphist.html[History of BOS]
