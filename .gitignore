@@ -7,3 +7,4 @@ mmm_fs
 *.swo
 *.bak
 *.cm*
+vm_ex*.py

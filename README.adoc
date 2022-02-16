@@ -45,3 +45,39 @@ Currently, this is basically just a simple disk operating system shell (DOS shel
 most operating systems of the era were written: start with a DOS, then add a Shell, then add all the stuff you actually
 want to support. My thoughts here are something like BOS, USCD Pascal, and Inferno could be really interesting, all in
 a simple set of files. Make it easily hackable, easily approachable, and restartable
+
+== Ideas
+
+I've been thinking heavily about how do we make a multi-user version of this? Obvious, a dbm-based version can easily be made
+multi-user, but Python and multi-user is... suspect. The thought struck me, however:
+
+. use the packs as the arbiter combined with the kernel:
+.. each user runs their own executive
+.. this enforces the constraints stored within the packs
+.. packs are then shared amongst users, but executives aren't
+.. thus, we really only to make sure that the ACLs, TLPs, and MAC/RBACs are followed in the executive
+.. and that users cannot modify the executive (obviously)
+. We can make this "cloud native" scale by using external key-value stores, like Raft
+.. Raft stores our file system, segments, metadata
+.. CPU executives then interact with the remote single-level store
+. Ports, Printers, &c are stored within the packs
+.. obviously these are just things that are written to & read from, almost pub-sub style
+. User journaling
+.. one thing I'm passionate about is just saving the state of the world
+.. users should literally be able to destroy their device and restart as if nothing happend
+.. we can do this by journaling application state from time to time to a location in the pack(s)
+.. thus a user only loses up to the last journal time at any given time
+.. similarly, we can track what opened a file last; a user can then just use the `open` command with a file
+.. or they can access their "recently viewed" files easily. it should be part of the system
+. API
+.. I need to read more about the multics programming env, it looks interesting
+.. but I also know that what VOS called `program modules` are the way I want to go, like Inferno
+.. Modules + `main` == Programs: if a module has a `main`, it can be run, but also loaded
+.. Need to figure out how to work with segments
+. Groups vs Projects
+.. All users have groups
+.. They also have special mandatory access groups called Projects
+.. Projects can have special roles attached, like in Multics
+. Poplog, RavenWorks
+.. Common Language Runtime
+.. StandardML, Pop-11 (simple JS-like language), Oberon
