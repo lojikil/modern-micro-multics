@@ -57,6 +57,9 @@ multi-user, but Python and multi-user is... suspect. The thought struck me, howe
 .. packs are then shared amongst users, but executives aren't
 .. thus, we really only to make sure that the ACLs, TLPs, and MAC/RBACs are followed in the executive
 .. and that users cannot modify the executive (obviously)
+.. we can also back up our MAC/RBACs with the host operating system/Datastore
+.. for example, ACLs in Raft could back up what we use in the OS itself
+.. someone with SysAdmin privs should be able to set those... maybe cluster privs?
 .. *OH* this is what Multics and older computers called "front-end processors..."
 .. Web front-ends can use Status VOS display-only mode can be used...
 .. Need a mapping from applications to display forms
