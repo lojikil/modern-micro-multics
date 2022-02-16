@@ -19,7 +19,7 @@ class VM(object):
         while not self.vmhalt and self.control < len(prg):
             (op, operand) = prg[self.control]
             self.execute(op, operand)
-            if op != "jmp" and op != "jpc":
+            if op != "jmp" and op != "jpc" and op != 'cup' and op != 'ret':
                 self.control = self.control + 1
 
     def add_csp(self, syscall, f, arity):
@@ -82,7 +82,19 @@ class VM(object):
                 # float_of_string
                 opr0 = self.stack.pop()
                 stack.append(float(opr0))
-            pass
+            elif iopr in self.csp:
+                [f, arity] = self.csp[iopr]
+                if len(self.stack) >= arity:
+                    l = len(self.stack)
+                    o = l - arity
+                    data = self.stack[o:l]
+                    stack.append(f(*data))
+                else:
+                    self.vmhalt = True
+                    print("Stack underflow in CSP call: arity {0} stack {1}".format(arity, l))
+            else:
+                self.vmhalt = True
+                print("Incorrect CSP number {0}".format(iopr))
         elif op == "cup":
             # call user procedure
             pass
