@@ -136,5 +136,10 @@ if __name__ == "__main__":
     vfs_mkdir(fs, ">system>bin")
     mainvm = VM()
 
+    # we need to wire up the VM here with all the syscalls like:
+    # v.add_csp(8, lambda x: vfs_mkdir(fs, x), 1)
+    # this ignores packs... sorta, but we can fix that. Neat for
+    # a first pass
+
     dos_shell(fs, mainvm)
     fs.close()

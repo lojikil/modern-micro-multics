@@ -88,7 +88,7 @@ class VM(object):
                     l = len(self.stack)
                     o = l - arity
                     data = self.stack[o:l]
-                    stack.append(f(*data))
+                    self.stack.append(f(*data))
                 else:
                     self.vmhalt = True
                     print("Stack underflow in CSP call: arity {0} stack {1}".format(arity, l))
