@@ -18,7 +18,6 @@ class VM(object):
 
         while not self.vmhalt and self.control < len(prg):
             (op, operand) = prg[self.control]
-            print("next op is:", self.control, op, operand)
             self.execute(op, operand)
             if op != "jmp" and op != "jpc" and op != 'cup' and op != 'ret':
                 self.control = self.control + 1
@@ -61,7 +60,7 @@ class VM(object):
             if iopr == 0:
                 # print
                 opr0 = self.stack.pop()
-                print("csp0:", opr0, self.control)
+                print(opr0)
             elif iopr == 1:
                 # readline
                 opr0 = self.stack.pop()
@@ -109,10 +108,8 @@ class VM(object):
             # jump to the location of the user procedure
             # I wonder if we should add a "call segment
             # procedure" operator... cgp
-            print("here cup 111", operand)
             self.dump.append([self.stack.copy(), self.env.copy(), self.control])
             self.control = int(operand)
-            print(self.control)
         elif op == "opr":
             iopr = int(operand)
             # arithemetic operators
@@ -221,15 +218,11 @@ class VM(object):
                 self.stack.append(opr0)
                 self.stack.append(opr2)
         elif op == "ret":
-            print("here 221")
             if len(self.dump) <= 0:
-                print("Dump stack underflow")
                 self.vmhalt = True
                 return
             curstack = self.stack
-            print(curstack)
             dval = self.dump.pop()
-            print(dval)
             self.stack = dval[0]
             self.env = dval[1]
             self.control = dval[2] + 1
@@ -241,7 +234,6 @@ class VM(object):
             if cnd:
                 self.control = int(operand)
             else:
-                print("in the else portion here?", self.control, self.control + 1)
                 self.control += 1
         elif op == "nop":
             pass
