@@ -125,6 +125,15 @@ def dos_shell(fs, mvm):
             # the binary name really..
             print("command not found")
 
+def wrap_vfs_read(pack, segment):
+    cparts = vfs_util_workdir_segment(segment)
+    res = vfs_read(pack, cparts[0], cparts[1])
+    return res.decode('utf8')
+
+def wrap_vfs_write(pack, segment, data):
+    cparts = vfs_util_workdir_segment(segment)
+    vfs_write(fs, cparts[0], cparts[1], data)
+
 if __name__ == "__main__":
     fs = dbm.open('mmm_fs', 'c')
     if b">system.dir" not in fs.keys():
@@ -140,6 +149,11 @@ if __name__ == "__main__":
     # v.add_csp(8, lambda x: vfs_mkdir(fs, x), 1)
     # this ignores packs... sorta, but we can fix that. Neat for
     # a first pass
+    mainvm.add_csp(9, lambda x: vfs_mkdir(fs, x), 1)
+    mainvm.add_csp(10, lambda x: vfs_listdir(fs, x), 1)
+    mainvm.add_csp(11, lambda x: vfs_create(fs, x), 1)
+    mainvm.add_csp(12, lambda x: wrap_vfs_read(fs, x), 1)
+    mainvm.add_csp(13, lambda x, y: wrap_vfs_write(fs, x, y), 2)
 
     dos_shell(fs, mainvm)
     fs.close()
