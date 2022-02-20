@@ -13,14 +13,24 @@ class VM(object):
     def run(self, program):
         lines = program.split('\n')
         prg = []
+        self.control = 0
+        self.vmhalt = False
+        self.env = {}
+        self.stack = []
+        self.dump = []
         for line in lines:
             prg.append(self.decode_instruction(line))
 
         while not self.vmhalt and self.control < len(prg):
             (op, operand) = prg[self.control]
-            self.execute(op, operand)
-            if op != "jmp" and op != "jpc" and op != 'cup' and op != 'ret':
-                self.control = self.control + 1
+            try:
+                self.execute(op, operand)
+                if op != "jmp" and op != "jpc" and op != 'cup' and op != 'ret':
+                    self.control = self.control + 1
+            except Exception as e:
+                print("TRAP: ", e, " at: ", self.control)
+                print(program)
+                break
 
     def add_csp(self, syscall, f, arity):
         self.csp[syscall] = [f, arity]
