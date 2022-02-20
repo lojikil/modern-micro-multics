@@ -119,7 +119,7 @@ def dos_shell(fs, mvm):
             if type(pm) == VFSError:
                 print(pm)
             else:
-                mvm.run(pm)
+                mvm.run(pm.decode('utf8'))
         else:
             # here, we can check >system>bin and cwd for
             # the binary name really..
