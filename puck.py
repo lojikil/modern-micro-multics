@@ -1,0 +1,95 @@
+#@(#) a very simple-forth/joy/cat-alike for compiling to MMM Assembly
+#@(#) named after the character from A Mid-Summer Night's Dream; I was
+#@(#) originally thinking about implementing Oberon, but looking for
+#@(#) a smaller one...
+#@(#) also makes me really appreciative of the tools I get for free
+#@(#) in Reason/SML/OCaml/Haskell
+
+class PuckAST:
+    def compile(self):
+        raise NotImplemented()
+    pass
+
+class PuckInt(PuckAST):
+    def __init__(self, i):
+        self.i = i
+
+    def depth(self):
+        return 1
+
+    def __str__(self):
+        return "ldi {0}".format(self.i)
+
+class PuckFloat(PuckAST):
+    def __init__(self, f):
+        self.f = f
+
+    def depth(self):
+        return 1
+
+    def __str__(self):
+        return "ldr {0}".format(self.f)
+
+class PuckBool(PuckAST):
+    def __init__(self, b):
+        self.b = b
+
+    def depth(self):
+        return 1
+
+    def __str__(self):
+        return "ldb {0}".format(self.b)
+
+class PuckString(PuckAST):
+    def __init__(self, s):
+        self.s = s
+
+    def depth(self):
+        return 1
+
+    def __str__(self):
+        return "lds {0}".format(self.s)
+
+class PuckIf(PuckAST):
+    def __init__(self, cond, then, el):
+        self.cond = cond
+        self.then = then
+        self.el = el
+
+    def depth(self):
+        return self.cond.depth() + self.then.depth() + self.el.depth()
+
+    def __str__(self, offset=0):
+        cond = "\n".join([str(x) for x in self.cond])
+        ocond = self.cond.depth()
+        dthen = self.then.depth()
+        othen = ocond + 2
+        oelse = ocond + 2 + dthen
+        res = "{0}\njpc {1}\njmp {2}\n{3}\n{4}\n"
+       return res.format(cond, othen, oelse, then, el)
+
+class PuckBlock(PuckAST):
+    def __init__(self, block):
+        self.block = block
+
+    def depth(self):
+        # would be so much nicer with a fold_*
+        res = 0
+        for b in self.block:
+            res += b.depth()
+        return res
+
+    def __str__(self, offset=0):
+        return "\n".join([str(x) for x in self.block])
+
+class Puck:
+    def __init__(self):
+        self.current_line = 0
+        self.current_word = ""
+
+    def next_lexeme(self, src, offset):
+        pass
+
+    def parse(self, src) -> PuckAST:
+        (nextl, o) = self.next_lexeme(src, 0)
+        while nextl != T
