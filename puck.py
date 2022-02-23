@@ -66,7 +66,7 @@ class PuckIf(PuckAST):
         othen = ocond + 2
         oelse = ocond + 2 + dthen
         res = "{0}\njpc {1}\njmp {2}\n{3}\n{4}\n"
-       return res.format(cond, othen, oelse, then, el)
+        return res.format(cond, othen, oelse, then, el)
 
 class PuckBlock(PuckAST):
     def __init__(self, block):
@@ -82,6 +82,18 @@ class PuckBlock(PuckAST):
     def __str__(self, offset=0):
         return "\n".join([str(x) for x in self.block])
 
+class PuckOp(PuckAST):
+    def __init__(self, op):
+        self.op = op
+        self.oplist = [ "+", "-", "*", "/", "%", "<<", ">>", "&", "|", "^",
+                        "~", "neg", "not", "<", "<=", ">", ">=", "==", "!="]
+
+    def depth(self):
+        return 1
+
+    def __str__(self):
+        return "opr {0}".format(self.oplist.index(self.op))
+
 class Puck:
     def __init__(self):
         self.current_line = 0
@@ -91,5 +103,7 @@ class Puck:
         pass
 
     def parse(self, src) -> PuckAST:
-        (nextl, o) = self.next_lexeme(src, 0)
-        while nextl != T
+        pass
+        #(nextl, o) = self.next_lexeme(src, 0)
+        #while nextl != T:
+        #    pass
