@@ -60,13 +60,18 @@ class PuckIf(PuckAST):
         return self.cond.depth() + self.then.depth() + self.el.depth()
 
     def __str__(self, offset=0):
-        cond = "\n".join([str(x) for x in self.cond])
+        cond = str(self.cond)
         ocond = self.cond.depth()
         dthen = self.then.depth()
+        then = str(self.then)
+        el = str(self.el)
         othen = ocond + 2
-        oelse = ocond + 2 + dthen
-        res = "{0}\njpc {1}\njmp {2}\n{3}\n{4}\n"
-        return res.format(cond, othen, oelse, then, el)
+        oelse = ocond + 3 + dthen
+        # NOTE: we have to put a NOP & a jump over the
+        # else form, so that we don't accidentally run
+        # that each time too...
+        res = "{0}\njpc {1}\njmp {2}\n{3}\njmp {5}\n{4}\nnop\n"
+        return res.format(cond, othen, oelse, then, el, oelse + 1)
 
 class PuckBlock(PuckAST):
     def __init__(self, block):
