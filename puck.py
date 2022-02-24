@@ -17,8 +17,11 @@ class PuckInt(PuckAST):
     def depth(self):
         return 1
 
-    def __str__(self):
+    def compile(self):
         return "ldi {0}".format(self.i)
+
+    def __str__(self):
+        return self.compile()
 
 class PuckFloat(PuckAST):
     def __init__(self, f):
@@ -27,8 +30,11 @@ class PuckFloat(PuckAST):
     def depth(self):
         return 1
 
-    def __str__(self):
+    def compile(self):
         return "ldr {0}".format(self.f)
+
+    def __str__(self):
+        return self.compile()
 
 class PuckBool(PuckAST):
     def __init__(self, b):
@@ -37,8 +43,11 @@ class PuckBool(PuckAST):
     def depth(self):
         return 1
 
-    def __str__(self):
+    def compile(self):
         return "ldb {0}".format(self.b)
+
+    def __str__(self):
+        return self.compile()
 
 class PuckString(PuckAST):
     def __init__(self, s):
@@ -47,8 +56,11 @@ class PuckString(PuckAST):
     def depth(self):
         return 1
 
-    def __str__(self):
+    def compile(self):
         return "lds {0}".format(self.s)
+
+    def __str__(self):
+        return self.compile()
 
 class PuckIf(PuckAST):
     def __init__(self, cond, then, el):
@@ -59,7 +71,7 @@ class PuckIf(PuckAST):
     def depth(self):
         return self.cond.depth() + self.then.depth() + self.el.depth()
 
-    def __str__(self, offset=0):
+    def compile(self, offset=0):
         cond = str(self.cond)
         ocond = self.cond.depth()
         dthen = self.then.depth()
@@ -73,6 +85,9 @@ class PuckIf(PuckAST):
         res = "{0}\njpc {1}\njmp {2}\n{3}\njmp {5}\n{4}\nnop\n"
         return res.format(cond, othen, oelse, then, el, oelse + 1)
 
+    def __str__(self):
+        return self.compile()
+
 class PuckBlock(PuckAST):
     def __init__(self, block):
         self.block = block
@@ -84,8 +99,11 @@ class PuckBlock(PuckAST):
             res += b.depth()
         return res
 
-    def __str__(self, offset=0):
+    def compile(self, offset=0):
         return "\n".join([str(x) for x in self.block])
+
+    def __str__(self):
+        return self.compile()
 
 class PuckOp(PuckAST):
     def __init__(self, op):
@@ -97,7 +115,40 @@ class PuckOp(PuckAST):
         return 1
 
     def __str__(self):
+        return self.compile()
+
+    def compile(self):
         return "opr {0}".format(self.oplist.index(self.op))
+
+class PuckDef(PuckAST):
+    def __init__(self, name, body):
+        self.name = name
+        self.body = body
+
+    def depth(self):
+        return body.depth()
+
+    def compile(self, offset=0):
+        # NOTE: compiling definitions is interesting, because
+        # the MMM/VM doesn't actually have a notion of a
+        # named procedure; it just uses a numbered label
+        # and setups up the stack. So we need to know
+        # where we are, but also replace all *calls* to
+        # this named lambda with it's correct numbered label...
+        return self.body.compile()
+
+class PuckCall(PuckAST):
+    def __init__(self, f):
+        self.f = f
+
+    def depth(self):
+        return 1
+
+    def compile(self)
+        return "cup {0}"
+
+    def __str__(self):
+        return self.compile()
 
 class Puck:
     def __init__(self):
