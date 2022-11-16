@@ -14,6 +14,7 @@ create or cr: create a file/segment
 display or d: display the contents of a file or segment
 ed: line editor
 create_directory or crd: create a directory
+run or r: run the assembly language program
 help or h: this help
 """)
 
@@ -141,6 +142,9 @@ if __name__ == "__main__":
 
     if b">udd.dir" not in fs.keys():
         fs[">udd.dir"] = ""
+
+    if b">pdd.dir" not in fs.keys():
+        fs[">pdd.dir"] = ""
 
     vfs_mkdir(fs, ">system>bin")
     mainvm = VM()
